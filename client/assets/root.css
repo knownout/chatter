@@ -1,5 +1,5 @@
 #global {
-  position: relative;
+  position: absolute;
   display: block;
   width: 100%;
   height: 100%;
@@ -8,15 +8,22 @@
   right: 0;
   bottom: 0;
   user-select: none;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  color: #333;
 }
 
 #global * {
   outline: none;
   -webkit-tap-highlight-color: transparent;
+  box-sizing: border-box;
+}
+
+#global *::selection {
+  background-color: rgba(33, 108, 168, 0.275);
 }
 
 #elements-root {
-  position: relative;
+  position: absolute;
   display: block;
   width: 100%;
   height: 100%;

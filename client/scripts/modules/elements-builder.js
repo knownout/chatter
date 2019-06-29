@@ -20,7 +20,8 @@ function Element(tag, attributes, childs){
                 element.appendChild(child);
         }
     } catch(e){ throw new Error(e); }
-    finally{ return element; }
+    
+    return element;
 }
 
 export {Element};

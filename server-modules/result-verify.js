@@ -1,11 +1,12 @@
+function hash(string){ return crypto.createHash('md5').update(string).digest("hex"); }
 function verifyResult(result, request, collection, callback){
-    function insertData(login, password){
-        collection.insertOne({ login: login, password: password, status: 'default' }, (fail, insertResult) => {
+    function insertData(login, pincode){
+        collection.insertOne({ login: login, pincode: pincode, status: 'default' }, (fail, insertResult) => {
             if(!fail){
                 callback({
                     authResult: true,
                     id: insertResult.ops[0]._id.toString(),
-                    passHash: password,
+                    passHash: pincode,
                     newUser: true
                 });
             } else {
@@ -21,9 +22,10 @@ function verifyResult(result, request, collection, callback){
     switch(result.length){
         case 1:
             result = result[0];
+
             if(
-                request.body.password.toString()
-                    === result.password.toString()
+                request.body.pincode.toString()
+                    === result.pincode.toString()
             ){
                 let toReturn = {
                     authResult: true,
@@ -31,7 +33,7 @@ function verifyResult(result, request, collection, callback){
                 };
 
                 if(!request.body.nohash)
-                    toReturn.passHash = request.body.password;
+                    toReturn.passHash = request.body.pincode;
 
                 callback(toReturn);
             } else {
@@ -47,7 +49,7 @@ function verifyResult(result, request, collection, callback){
                     authResult: false,
                     reason: 'Account not exists',
                 });
-            } else insertData(request.body.login, request.body.password);
+            } else insertData(request.body.login, request.body.pincode);
         break;
         default:
             if(request.body.nohash){
@@ -58,7 +60,7 @@ function verifyResult(result, request, collection, callback){
                 });
             } else {
                 collection.deleteMany({ login: request.body.login }, fail => {
-                    if(!fail) insertData(request.body.login, request.body.password);
+                    if(!fail) insertData(request.body.login, request.body.pincode);
                     else callback({
                         authResult: false,
                         reason: 'Database failure',

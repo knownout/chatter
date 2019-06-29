@@ -24,7 +24,9 @@
   "homepage": "https://github.com/re-knownout/chatter#readme",
   "dependencies": {
     "cors": "^2.8.5",
+    "crypto": "^1.0.1",
     "express": "^4.17.1",
-    "http": "0.0.0"
+    "http": "0.0.0",
+    "mongodb": "^3.2.7"
   }
 }
