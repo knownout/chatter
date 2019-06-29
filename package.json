@@ -1,0 +1,30 @@
+{
+  "name": "chatter",
+  "version": "1.1.0",
+  "description": "Simple chat on webSocket technology",
+  "main": "index.js",
+  "scripts": {
+    "test": "node index"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/re-knownout/chatter.git"
+  },
+  "keywords": [
+    "chat",
+    "websocket",
+    "node",
+    "js"
+  ],
+  "author": "knownOut",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/re-knownout/chatter/issues"
+  },
+  "homepage": "https://github.com/re-knownout/chatter#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "http": "0.0.0"
+  }
+}
