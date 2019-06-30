@@ -1,31 +1,28 @@
 import {Element} from './modules/elements-builder.js';
 import {throwFields} from './modules/throw-fields.js';
+import {formFactory} from './modules/form-factory.js';
+import {message} from './message-box.js';
 
-class AuthForm{
-    statusElement = null;
-    constructor(){
-        let root = document.querySelector('#global #elements-root');
-        if(!root)
-            throw new Error('Cannot get root element');
-        
-        this.root = root;
-    };
+const statusMessages = {
+    default: 'Minimum 4 symbols required<br>Press Enter to process',
+    processing: 'Processing ...<br>&nbsp;',
+    error: 'Internal software error<br>&nbsp;'
+};
 
-    setup(callback){
-        const element = Element('div', {id: 'auth-form', class: 'form'}, [
-            Element('div', {class: 'form-content', show: false}, [
-                Element('span', {class: 'form-title', html: 'Chatter'}),
-                Element('div', {class: 'form-controls'}, [
-                    Element('input', {type: 'text', placeholder: 'Login', maxlength: 16, spellcheck: false}),
-                    Element('input', {type: 'password', placeholder: 'Pin-code', maxlength: 16, spellcheck: false})
-                ]),
-                Element('a', {class: 'process-status', html: 'Press Enter to process'}),
-                Element('link', {rel: 'stylesheet', href: '/client/assets/auth-form.css'})
-            ])
-        ]);
-
+var statusElement = null;
+function authForm(callback){
+    formFactory('auth', [
+        Element('span', {class: 'form-title', html: 'Chatter'}),
+        Element('div', {class: 'form-controls'}, [
+            Element('input', {type: 'text', placeholder: 'Login', maxlength: 16, spellcheck: false}),
+            Element('input', {type: 'password', placeholder: 'Pin-code', maxlength: 16, spellcheck: false})
+        ]),
+        Element('a', {class: 'process-status', html: statusMessages.default}),
+        Element('link', {rel: 'stylesheet', href: '/client/assets/auth-form.css'}),
+        Element('link', {rel: 'stylesheet', href: '/client/assets/form-default.css'}),
+    ], element => {
         const fields = Object();
-        this.statusElement
+        statusElement
             = element.querySelector('.process-status');
 
         [fields.login, fields.pincode]
@@ -56,6 +53,9 @@ class AuthForm{
                     = loginParameters.filter(e => e != false);
 
                 if(loginParameters.length == 2){
+                    if(statusElement)
+                        statusElement.innerHTML = statusMessages.processing;
+
                     fetch('/chatter-auth', {
                         method: 'post',
                         headers: { 'Content-Type': 'application/json' },
@@ -65,7 +65,7 @@ class AuthForm{
                             pincode: loginParameters[1]
                         })
                     }).then(response => response.json())
-                    .then(result => {
+                    .then(result => {                        
                         if(result.authResult){
                             window.client = Object({
                                 login: loginParameters[0],
@@ -78,18 +78,32 @@ class AuthForm{
                                     pincode: result.contain.passHash
                                 }));
                             }
-                        } else
+                        } else {
                             throwFields([fields.pincode]);
-                    }).catch(e => { throw new Error(e); });
+                            message(result.contain.message);
+                        }
+
+                        if(statusElement)
+                            statusElement.innerHTML = statusMessages.default;
+                    }).catch(e => {
+                        if(statusElement)
+                            statusElement.innerHTML = statusMessages.error;
+
+                        message('Internal software error. <br>Try reloading page', true);
+                        throwFields(Object.values(fields), true);
+                        throw new Error(e);
+                    });
+                } else {
+                    for(let field of Object.values(fields)){
+                        if(!formField(field)) throwFields([field], true);
+                    }
                 }
             }
         }
 
         document.addEventListener('keydown', window.documentEvent);
-
-        this.root.appendChild(element);
-        if(callback) callback(element);
-    }
+        if(callback) callback();
+    });
 }
 
-export {AuthForm, Element};
+export {authForm, Element};

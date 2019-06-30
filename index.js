@@ -8,7 +8,7 @@ let http = require('http'),
 const formResult = require('./server-modules/result-verify.js');
 const mongoClinet 
     = new MongoClient(
-        'mongodb+srv://ko-chatter:MeltingGirl@cluster0-vpoz8.mongodb.net/test?retryWrites=true&w=majority',
+        'mongodb+srv://ko-chatter:U_8cX436sCiuaBe@cluster0-vpoz8.mongodb.net/test?retryWrites=true&w=majority',
         { useNewUrlParser: true }
     );
 const webSocketSetup = require('./server-modules/web-socket.js');
@@ -31,13 +31,14 @@ mongoClinet.connect((fail, client) => {
                             formResult(searchResult, content, processResult => {
                                 if(processResult.authResult){
                                     const insertClient = () => {
-                                        global.authClients[processResult.contain.id] = Object();
-                                        global.authClients[processResult.contain.id]
-                                            .login = content.login;
+                                        global.authClients[processResult.contain.id] = Object({
+                                            login: content.login
+                                        });
 
                                         setTimeout(() => {
                                             if(
-                                                !('webSocket' in authClients[
+                                                !authClients[processResult.contain.id]
+                                                || !('webSocket' in authClients[
                                                     processResult.contain.id
                                                 ])
                                             ){

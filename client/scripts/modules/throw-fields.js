@@ -1,7 +1,7 @@
 import {settings} from '../../main-script.js';
-function throwFields(fields){
+function throwFields(fields, noclear = false){
     for(let field of fields){
-        field.value = '';
+        if(!noclear) field.value = '';
         field.setAttribute('throw', '');
         setTimeout(
             () => field.removeAttribute('throw'),

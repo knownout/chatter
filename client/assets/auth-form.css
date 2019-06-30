@@ -1,4 +1,4 @@
-div.form .form-content, div.form .form-content .form-title, div.form .form-content a.process-status, div.form .form-content input {
+div#auth-form .form-title, div#auth-form a.process-status, div#auth-form input {
   position: relative;
   display: block;
 }
@@ -18,38 +18,21 @@ div.form .form-content, div.form .form-content .form-title, div.form .form-conte
   }
 }
 
-div.form {
-  position: absolute;
-  display: flex;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  justify-content: center;
-  align-items: center;
-}
-
-div.form .form-content {
-  width: 100%;
-  max-width: 260px;
-  height: fit-content;
-}
-
-div.form .form-content .form-title {
+div#auth-form .form-title {
   width: 100%;
   text-align: center;
   font-size: 24px;
   margin-bottom: 10px;
 }
 
-div.form .form-content a.process-status {
+div#auth-form a.process-status {
   width: 100%;
   text-align: center;
   opacity: .5;
   margin-top: 10px;
 }
 
-div.form .form-content input {
+div#auth-form input {
   width: 100%;
   height: 40px;
   border: 5px solid #eee;
@@ -59,11 +42,11 @@ div.form .form-content input {
   color: #333;
 }
 
-div.form .form-content input:focus {
+div#auth-form input:focus {
   border-color: rgba(33, 108, 168, 0.3);
 }
 
-div.form .form-content input[throw] {
+div#auth-form input[throw] {
   border-color: rgba(168, 33, 33, 0.3);
   animation: .32s ease throw;
 }
