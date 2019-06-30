@@ -1,4 +1,6 @@
 import {Element} from './modules/elements-builder.js';
+import {throwFields} from './modules/throw-fields.js';
+
 class AuthForm{
     statusElement = null;
     constructor(){
@@ -64,7 +66,20 @@ class AuthForm{
                         })
                     }).then(response => response.json())
                     .then(result => {
-                        console.log(result);
+                        if(result.authResult){
+                            window.client = Object({
+                                login: loginParameters[0],
+                                token: result.contain.id
+                            });
+
+                            if(result.contain.passHash){
+                                localStorage.setItem('authData', JSON.stringify({
+                                    login: loginParameters[0],
+                                    pincode: result.contain.passHash
+                                }));
+                            }
+                        } else
+                            throwFields([fields.pincode]);
                     }).catch(e => { throw new Error(e); });
                 }
             }

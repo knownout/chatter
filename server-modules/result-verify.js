@@ -1,75 +1,80 @@
+const crypto = require('crypto');
 function hash(string){ return crypto.createHash('md5').update(string).digest("hex"); }
-function verifyResult(result, request, collection, callback){
-    function insertData(login, pincode){
-        collection.insertOne({ login: login, pincode: pincode, status: 'default' }, (fail, insertResult) => {
-            if(!fail){
-                callback({
-                    authResult: true,
-                    id: insertResult.ops[0]._id.toString(),
-                    passHash: pincode,
-                    newUser: true
-                });
-            } else {
-                callback({
-                    authResult: false,
-                    reason: 'Database failure',
-                    systemFail: true
-                });
-            }
-        });
-    }
 
-    switch(result.length){
+function formResult(searchResult, authData, callback){
+    const template = {
+        invaidData: {
+            authResult: false,
+            contain: {
+                code: 'a',
+                message: 'Invalid login details'
+            }
+        },
+        newUser: {
+            authResult: true,
+            contain: {
+                passHash: hash(authData.pincode),
+                id: null,
+                newUser: true
+            }
+        }
+    };
+    switch(searchResult.length){
         case 1:
-            result = result[0];
-
+            searchResult = searchResult[0];
             if(
-                request.body.pincode.toString()
-                    === result.pincode.toString()
+                (('pincode' in searchResult)
+                && ('login' in searchResult))
+                && (('pincode' in authData)
+                && ('login' in authData))
             ){
-                let toReturn = {
-                    authResult: true,
-                    id: result._id.toString()
-                };
-
-                if(!request.body.nohash)
-                    toReturn.passHash = request.body.pincode;
-
-                callback(toReturn);
-            } else {
-                callback({
-                    authResult: false,
-                    reason: 'Invalid login data'
-                });
-            }
+                let resultPincode 
+                    = authData.nohash === true ? authData.pincode : hash(authData.pincode);
+                
+                if(
+                    resultPincode.toString() === 
+                        searchResult.pincode.toString()
+                ){
+                    callback({
+                        authResult: true,
+                        contain: {
+                            passHash: resultPincode,
+                            id: searchResult._id,
+                            newUser: false
+                        }
+                    });
+                } else
+                    callback(template.invaidData);
+            } else
+                callback(template.invaidData);
         break;
         case 0:
-            if(request.body.nohash){
+            if(authData.nohash){
                 callback({
                     authResult: false,
-                    reason: 'Account not exists',
-                });
-            } else insertData(request.body.login, request.body.pincode);
-        break;
-        default:
-            if(request.body.nohash){
-                callback({
-                    authResult: false,
-                    reason: 'Many accouts with this name found, contact to admins',
-                    systemFail: true
+                    contain: {
+                        code: 'a',
+                        message: 'This account doesn\'t exist'
+                    }
                 });
             } else {
-                collection.deleteMany({ login: request.body.login }, fail => {
-                    if(!fail) insertData(request.body.login, request.body.pincode);
-                    else callback({
-                        authResult: false,
-                        reason: 'Database failure',
-                        systemFail: true
-                    });
+                callback(template.newUser);
+            }
+        break;
+        default:
+            if(authData.nohash){
+                callback({
+                    authResult: false,
+                    contain: {
+                        code: 'd',
+                        message: 'More then one account<br>with same name found'
+                    }
                 });
+            } else {
+
             }
         break;
     }
 }
 
-module.exports = verifyResult;
+module.exports = formResult;
