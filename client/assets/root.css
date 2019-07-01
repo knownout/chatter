@@ -30,6 +30,10 @@
   height: 100%;
 }
 
+#elements-root .form-content {
+  visibility: hidden;
+}
+
 #messages-root {
   position: absolute;
   display: block;

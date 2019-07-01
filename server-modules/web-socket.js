@@ -1,11 +1,9 @@
 const WebSocket = require('ws').Server;
 function setSocket(server){
     const webSocketServer = new WebSocket({ server: server });
-    var clientToken = null;
-
     function messageGlobal(message){
         for(let client in global.authClients){
-            if(!('webSocket' in client))
+            if(!('webSocket' in authClients[client]))
                 delete global.authClients[client];
             else {
                 global.authClients[client].webSocket.send(
@@ -16,6 +14,7 @@ function setSocket(server){
     }
 
     webSocketServer.on('connection', webSocket => {
+        var clientToken = null;
         webSocket.on('message', message => {
             let clientKeys = Object.keys(global.authClients);
 
@@ -90,11 +89,13 @@ function setSocket(server){
                                         }
                                     }));
                                 } else {
+                                    console.log(Object.keys(authClients));
                                     messageGlobal({
                                         type: 'data-transfer',
                                         contain: {
                                             select: 'global-message',
-                                            set: message.contain.set
+                                            set: message.contain.set,
+                                            author: global.authClients[clientToken.toString()].login
                                         }
                                     });
                                 }
@@ -103,12 +104,21 @@ function setSocket(server){
                     }
                 break;
             }
-
-            console.log(message);
         });
 
         webSocket.on('close', () => {
+            if(clientToken){
+                if(global.authClients[clientToken])
+                    delete global.authClients[clientToken];
+            }
 
+            messageGlobal({
+                type: 'data-transfer',
+                contain: {
+                    select: 'online-list',
+                    set: Object.keys(global.authClients).length
+                }
+            });
         });
     });
 }

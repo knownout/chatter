@@ -18,6 +18,7 @@ div.form .form-content {
   width: 100%;
   max-width: 260px;
   height: fit-content;
+  visibility: hidden;
 }
 
 div.form .form-content[show="false"] {
@@ -29,5 +30,5 @@ div.form .form-content[show="false"] {
 div.form .form-content[show="true"] {
   transform: scale(1, 1);
   opacity: 1;
-  visibility: visible;
+  visibility: visible !important;
 }

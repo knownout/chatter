@@ -9,12 +9,27 @@
         <link rel="stylesheet" href="https://necolas.github.io/normalize.css/8.0.1/normalize.css">
         <link rel="stylesheet" href="/client/assets/root.css">
 
+        <link rel="stylesheet" href="/client/assets/icons/fontello-embedded.css">
+
         <link rel="stylesheet" href="/client/assets/message-box.css">
         <script src="/client/main-script.js" type="module"></script>
     </head>
     <body>
         <div id="global">
-            <div id="elements-root"></div>
+            <div id="elements-root">
+                <div class="form">
+                    <header class="title-block">
+                        <div id="current-user-login" title="Current name:">null</div>
+                        <div id="online-counter" title="Now online:">null</div>
+                        <button id="logout-button">Log out</button>
+                    </header>
+                    <main id="chatter-messages"></main>
+                    <footer class="controls-block">
+                        <div contenteditable="true" placeholder="Write message here ..."></div>
+                        <button><i class="icon-feather"></i></button>
+                    </footer>
+                </div>
+            </div>
             <div id="messages-root"></div>
         </div>
     </body>

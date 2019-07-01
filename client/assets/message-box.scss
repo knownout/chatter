@@ -31,6 +31,8 @@
         max-width: 100%;
         width: fit-content;
 
+        text-align: right;
+
         &[warn="true"]{ background: rgb(160, 60, 60); }
         &[ready]:not(:first-child){ margin-top: 10px; }
         &[ready]{ transition: .12s ease all; visibility: visible; }

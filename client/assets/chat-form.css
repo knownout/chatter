@@ -1,0 +1,228 @@
+div#chat-form {
+  --footer-height: 45px;
+}
+
+div#chat-form .form-content {
+  width: 100%;
+  max-width: 720px;
+  height: calc(100% - 20px);
+  background: #ebebeb;
+  border-radius: 2px;
+  padding: 10px;
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+}
+
+div#chat-form .form-content header, div#chat-form .form-content footer {
+  position: relative;
+  display: flex;
+  width: 100%;
+  height: 40px;
+  border: 0px solid rgba(0, 0, 0, 0.1);
+}
+
+div#chat-form .form-content header button, div#chat-form .form-content footer button {
+  position: relative;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  height: 30px;
+  overflow: hidden;
+  border: none;
+  border-radius: 5px;
+  background: rgba(0, 0, 0, 0.1);
+  transition: .1s ease all;
+  cursor: pointer;
+}
+
+div#chat-form .form-content header button:hover, div#chat-form .form-content footer button:hover {
+  background: rgba(0, 0, 0, 0.15);
+}
+
+div#chat-form .form-content header button:active, div#chat-form .form-content footer button:active {
+  background: rgba(0, 0, 0, 0.2);
+}
+
+div#chat-form .form-content header button i[class^="icon-"], div#chat-form .form-content footer button i[class^="icon-"] {
+  position: relative;
+  display: block;
+  top: 1px;
+}
+
+div#chat-form .form-content header {
+  border-bottom-width: 1px;
+  align-items: center;
+  justify-content: center;
+}
+
+div#chat-form .form-content header div[top-title] {
+  position: relative;
+  display: inline-block;
+  height: 30px;
+  width: fit-content;
+}
+
+div#chat-form .form-content header div[top-title]::before {
+  content: attr(top-title);
+  position: relative;
+  display: block;
+  width: 100%;
+  height: fit-content;
+  font-size: 14px;
+  opacity: .5;
+  white-space: nowrap;
+  margin-top: -5px;
+}
+
+div#chat-form .form-content header div[top-title]#current-user-login {
+  position: absolute;
+  left: 0;
+}
+
+div#chat-form .form-content header div[top-title] a {
+  position: relative;
+  display: inline-block;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  max-width: 120px;
+}
+
+div#chat-form .form-content header div[top-title]#online-counter {
+  text-align: center;
+}
+
+div#chat-form .form-content header div[top-title]#online-counter a {
+  max-width: 50px;
+}
+
+div#chat-form .form-content header button {
+  position: absolute;
+  right: 0;
+  margin-top: -5px;
+}
+
+div#chat-form .form-content main {
+  position: relative;
+  display: block;
+  height: calc(100% - var(--footer-height) - 37px);
+  padding: 10px;
+}
+
+div#chat-form .form-content main div.chatter-node {
+  position: relative;
+  display: block;
+  width: fit-content;
+  max-width: 80%;
+  height: fit-content;
+  background: #ddd;
+  padding: 10px;
+  border-radius: 0 5px 5px 5px;
+}
+
+div#chat-form .form-content main div.chatter-node:not(:last-child) {
+  margin-bottom: 10px;
+}
+
+div#chat-form .form-content main div.chatter-node[own="true"] {
+  left: 100%;
+  transform: translateX(-100%);
+  text-align: right;
+  border-radius: 5px 5px 0 5px;
+  background: #d9d9d9;
+}
+
+div#chat-form .form-content main div.chatter-node[own="true"] .node-title {
+  left: inherit;
+  transform: inherit;
+}
+
+div#chat-form .form-content main div.chatter-node p {
+  margin: 0;
+}
+
+div#chat-form .form-content main div.chatter-node s {
+  position: relative;
+  display: inline-block;
+  margin-left: 6px;
+  text-decoration: none;
+  opacity: 0.7;
+}
+
+div#chat-form .form-content main div.chatter-node .node-title {
+  position: relative;
+  display: flex;
+  font-size: 14px;
+  opacity: .7;
+  width: fit-content;
+}
+
+div#chat-form .form-content footer {
+  height: calc(var(--footer-height));
+  border-top-width: 1px;
+  padding-top: 10px;
+  justify-content: center;
+  align-items: center;
+  bottom: 3px;
+}
+
+div#chat-form .form-content footer div[contenteditable="true"] {
+  position: relative;
+  display: block;
+  width: calc(100% - 40px - 60px);
+  min-height: 30px;
+  height: fit-content;
+  line-height: 20px;
+  font-size: 15px;
+  padding: 5px;
+  max-height: 80px;
+  overflow: hidden;
+  overflow-y: auto;
+  border-radius: 5px;
+  background: rgba(0, 0, 0, 0.05);
+  cursor: text;
+}
+
+div#chat-form .form-content footer div[contenteditable="true"]::before {
+  content: attr(placeholder);
+  position: absolute;
+  display: flex;
+  width: calc(100% - 10px);
+  height: 30px;
+  align-items: center;
+  opacity: .5;
+  top: 0;
+  left: 5px;
+  pointer-events: none;
+}
+
+div#chat-form .form-content footer div[contenteditable="true"][empty="true"]::before {
+  display: flex !important;
+}
+
+div#chat-form .form-content footer div[contenteditable="true"][empty="false"]::before {
+  display: none !important;
+}
+
+div#chat-form .form-content footer button {
+  height: 30px;
+  margin-left: 5px;
+  border-radius: 5px;
+}
+
+@media screen and (max-width: 720px) {
+  div#chat-form .form-content {
+    box-shadow: none;
+    border-radius: 0;
+    height: 100%;
+  }
+  div#chat-form .form-content div[contenteditable="true"] {
+    width: calc(100% - 40px) !important;
+  }
+}
+
+@media screen and (max-width: 340px) {
+  div#chat-form header #online-counter {
+    display: none;
+  }
+}

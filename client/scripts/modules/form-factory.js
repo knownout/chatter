@@ -6,9 +6,13 @@ function formFactory(formid, childs, callback){
     if(!root)
         throw new Error('Cannot get root element');
 
+    if(window.documentEvent)
+        document.removeEventListener('keydown', window.documentEvent);
+
     if(window.active){
-        window.active.setAttribute('show', false);
-            setTimeout(() => formFactory(callback), settings.duration.window + 50);
+        window.active.querySelector('.form-content').setAttribute('show', false);
+        window.active = null;
+            setTimeout(() => formFactory(formid, childs, callback), settings.duration.window + 50);
 
         return false;
     }

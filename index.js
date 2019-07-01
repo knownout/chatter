@@ -30,38 +30,47 @@ mongoClinet.connect((fail, client) => {
                         if(!fail){
                             formResult(searchResult, content, processResult => {
                                 if(processResult.authResult){
-                                    const insertClient = () => {
-                                        global.authClients[processResult.contain.id] = Object({
-                                            login: content.login
-                                        });
+                                    const insertClient = (callback) => {
+                                        if(Object.keys(global.authClients).includes(processResult.contain.id.toString())){
+                                            response.send(JSON.stringify({
+                                                authResult: false,
+                                                reason: 'This user already online'
+                                            }));
+                                        } else {
+                                            global.authClients[processResult.contain.id] = Object({
+                                                login: content.login
+                                            });
+    
+                                            setTimeout(() => {
+                                                try{
+                                                    if(
+                                                        !('webSocket' in authClients[
+                                                            processResult.contain.id
+                                                        ])
+                                                    ){
+                                                        delete authClients[processResult.contain.id];
+                                                    }
+                                                } catch {
+                                                    delete authClients[processResult.contain.id];
+                                                }
+                                            }, timeOut);
 
-                                        setTimeout(() => {
-                                            if(
-                                                !authClients[processResult.contain.id]
-                                                || !('webSocket' in authClients[
-                                                    processResult.contain.id
-                                                ])
-                                            ){
-                                                delete authClients[processResult.contain.id];
-                                            }
-                                        }, timeOut);
+                                            if(callback) callback();
+                                        }
                                     };
 
                                     if(processResult.contain.newUser){
-                                        console.log('new user');
                                         collection.insertOne(
                                             { login: content.login, pincode: processResult.contain.passHash },
                                             (fail, insertResult) => 
                                         {
                                             if(!fail){
                                                 processResult.contain.id = insertResult.ops[0]._id.toString();
-                                                insertClient();
+                                                insertClient(() => response.send(JSON.stringify(processResult)));
                                             }
                                         });
-                                    } else insertClient();
+                                    } else insertClient(() => response.send(JSON.stringify(processResult)));
                                 }
-
-                                response.send(JSON.stringify(processResult));
                             });
                         }
                     });
@@ -71,7 +80,9 @@ mongoClinet.connect((fail, client) => {
                 response.send(JSON.stringify({
                     authResult: false,
                     reason: 'Login failure'
-                }))
+                }));
+
+                return false;
             }
         });
 
