@@ -1,6 +1,8 @@
 %default{ position: relative; display: block; }
 div.form{
     position: absolute;
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
 
     width: 100%;
@@ -9,8 +11,14 @@ div.form{
     top: 0;
     left: 0;
 
-    justify-content: center;
-    align-items: center;
+    -webkit-box-pack: center;
+
+        -ms-flex-pack: center;
+
+            justify-content: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
 
     .form-content{
         @extend %default;
@@ -18,19 +26,25 @@ div.form{
         width: 100%;
         max-width: 260px;
         
+        height: -webkit-fit-content;
+        
+        height: -moz-fit-content;
+        
         height: fit-content;
         // transition: .25s ease all;
         visibility: hidden;
 
         &[show="false"]{
-            transform: scale(0.98, 0.98);
+            -webkit-transform: scale(0.98, 0.98);
+                    transform: scale(0.98, 0.98);
             opacity: 0;
 
             visibility: hidden;
         }
 
         &[show="true"]{
-            transform: scale(1, 1);
+            -webkit-transform: scale(1, 1);
+                    transform: scale(1, 1);
             opacity: 1;
 
             visibility: visible !important;

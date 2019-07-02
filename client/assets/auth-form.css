@@ -3,6 +3,21 @@ div#auth-form .form-title, div#auth-form a.process-status, div#auth-form input {
   display: block;
 }
 
+@-webkit-keyframes throw {
+  0% {
+    left: 0;
+  }
+  33% {
+    left: -8px;
+  }
+  66% {
+    left: 8px;
+  }
+  100% {
+    left: 0;
+  }
+}
+
 @keyframes throw {
   0% {
     left: 0;
@@ -38,6 +53,7 @@ div#auth-form input {
   border: 5px solid #eee;
   margin-top: 10px;
   text-align: center;
+  -webkit-transition: .1s ease all;
   transition: .1s ease all;
   color: #333;
 }
@@ -48,5 +64,6 @@ div#auth-form input:focus {
 
 div#auth-form input[throw] {
   border-color: rgba(168, 33, 33, 0.3);
+  -webkit-animation: .32s ease throw;
   animation: .32s ease throw;
 }

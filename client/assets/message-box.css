@@ -1,4 +1,5 @@
 #messages-root {
+  -webkit-box-sizing: border-box;
   box-sizing: border-box;
   margin: 0;
   padding: 10px;
@@ -16,12 +17,16 @@
   visibility: hidden;
   overflow: hidden;
   margin: 0;
+  -webkit-box-sizing: border-box;
   box-sizing: border-box;
   left: 100%;
+  -webkit-transform: translateX(-100%);
   transform: translateX(-100%);
   border-radius: 5px;
   cursor: pointer;
   max-width: 100%;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
   width: fit-content;
   text-align: right;
 }
@@ -35,6 +40,7 @@
 }
 
 #messages-root .message-node[ready] {
+  -webkit-transition: .12s ease all;
   transition: .12s ease all;
   visibility: visible;
 }

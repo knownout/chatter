@@ -12,11 +12,15 @@ div#chat-form{
 
         padding: 10px;
 
-        box-shadow: 0 2px 2px rgba(0, 0, 0, .3);
+        -webkit-box-shadow: 0 2px 2px rgba(0, 0, 0, .3);
+
+                box-shadow: 0 2px 2px rgba(0, 0, 0, .3);
         overflow: hidden;
 
         header, footer{
             position: relative;
+            display: -webkit-box;
+            display: -ms-flexbox;
             display: flex;
 
             width: 100%;
@@ -26,10 +30,18 @@ div#chat-form{
 
             button{
                 position: relative;
+                display: -webkit-inline-box;
+                display: -ms-inline-flexbox;
                 display: inline-flex;
 
-                justify-content: center;
-                align-items: center;
+                -webkit-box-pack: center;
+
+                    -ms-flex-pack: center;
+
+                        justify-content: center;
+                -webkit-box-align: center;
+                    -ms-flex-align: center;
+                        align-items: center;
 
                 height: 30px;
 
@@ -38,6 +50,8 @@ div#chat-form{
 
                 border-radius: 5px;
                 background: rgba(0, 0, 0, .1);
+
+                -webkit-transition: .1s ease all;
 
                 transition: .1s ease all;
                 &:hover{ background: rgba(0, 0, 0, .15); }
@@ -54,14 +68,20 @@ div#chat-form{
 
         header{
             border-bottom-width: 1px;
-            align-items: center;
-            justify-content: center;
+            -webkit-box-align: center;
+                -ms-flex-align: center;
+                    align-items: center;
+            -webkit-box-pack: center;
+                -ms-flex-pack: center;
+                    justify-content: center;
 
             div[top-title]{
                 position: relative;
                 display: inline-block;
 
                 height: 30px;
+                width: -webkit-fit-content;
+                width: -moz-fit-content;
                 width: fit-content;
                 &::before{
                     content: attr(top-title);
@@ -69,6 +89,8 @@ div#chat-form{
                     display: block;
 
                     width: 100%;
+                    height: -webkit-fit-content;
+                    height: -moz-fit-content;
                     height: fit-content;
 
                     font-size: 14px;
@@ -115,8 +137,16 @@ div#chat-form{
                 position: relative;
                 display: block;
 
+                width: -webkit-fit-content;
+
+                width: -moz-fit-content;
+
                 width: fit-content;
                 max-width: 80%;
+
+                height: -webkit-fit-content;
+
+                height: -moz-fit-content;
 
                 height: fit-content;
                 background: #ddd;
@@ -126,13 +156,15 @@ div#chat-form{
                 &:not(:last-child){ margin-bottom: 10px; }
                 &[own="true"]{
                     left: 100%;
-                    transform: translateX(-100%);
+                    -webkit-transform: translateX(-100%);
+                            transform: translateX(-100%);
 
                     text-align: right;
 
                     .node-title{
                         left: inherit;
-                        transform: inherit;
+                        -webkit-transform: inherit;
+                                transform: inherit;
                     }
 
                     border-radius: 5px 5px 0 5px;
@@ -150,10 +182,14 @@ div#chat-form{
                 }
                 .node-title{
                     position: relative;
+                    display: -webkit-box;
+                    display: -ms-flexbox;
                     display: flex;
 
                     font-size: 14px;
                     opacity: .7;
+                    width: -webkit-fit-content;
+                    width: -moz-fit-content;
                     width: fit-content;
                 }
             }
@@ -164,8 +200,12 @@ div#chat-form{
             border-top-width: 1px;
 
             padding-top: 10px;
-            justify-content: center;
-            align-items: center;
+            -webkit-box-pack: center;
+                -ms-flex-pack: center;
+                    justify-content: center;
+            -webkit-box-align: center;
+                -ms-flex-align: center;
+                    align-items: center;
 
             bottom: 3px;
 
@@ -175,6 +215,8 @@ div#chat-form{
 
                 width: calc(100% - 40px - 60px);
                 min-height: 30px;
+                height: -webkit-fit-content;
+                height: -moz-fit-content;
                 height: fit-content;
 
                 line-height: 20px;
@@ -193,12 +235,18 @@ div#chat-form{
                 &::before{
                     content: attr(placeholder);
                     position: absolute;
+                    display: -webkit-box;
+                    display: -ms-flexbox;
                     display: flex;
 
                     width: calc(100% - 10px);
                     height: 30px;
 
-                    align-items: center;
+                    -webkit-box-align: center;
+
+                        -ms-flex-align: center;
+
+                            align-items: center;
 
                     opacity: .5;
                     top: 0;
@@ -207,7 +255,7 @@ div#chat-form{
                     pointer-events: none;
                 }
 
-                &[empty="true"]::before{ display: flex !important; }
+                &[empty="true"]::before{ display: -webkit-box !important; display: -ms-flexbox !important; display: flex !important; }
                 &[empty="false"]::before{ display: none !important; }
             }
 
@@ -222,7 +270,8 @@ div#chat-form{
 
 @media screen and (max-width: 720px){
     div#chat-form .form-content{
-        box-shadow: none;
+        -webkit-box-shadow: none;
+                box-shadow: none;
         border-radius: 0;
 
         height: 100%;

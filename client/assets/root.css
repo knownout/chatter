@@ -7,6 +7,9 @@
   left: 0;
   right: 0;
   bottom: 0;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
   user-select: none;
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
   color: #333;
@@ -16,6 +19,7 @@
 #global * {
   outline: none;
   -webkit-tap-highlight-color: transparent;
+  -webkit-box-sizing: border-box;
   box-sizing: border-box;
 }
 
@@ -39,7 +43,11 @@
   display: block;
   right: 0;
   bottom: 0;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
   width: fit-content;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
   height: fit-content;
   pointer-events: none;
 }

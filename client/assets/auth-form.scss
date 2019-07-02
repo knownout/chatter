@@ -1,4 +1,10 @@
 %default{ position: relative; display: block; }
+@-webkit-keyframes throw{
+    0%{ left: 0; }
+    33%{ left: -8px; }
+    66%{ left: 8px; }
+    100%{ left: 0; }
+}
 @keyframes throw{
     0%{ left: 0; }
     33%{ left: -8px; }
@@ -37,13 +43,15 @@ div#auth-form{
         margin-top: 10px;
 
         text-align: center;
+        -webkit-transition: .1s ease all;
         transition: .1s ease all;
         color: #333;
 
         &:focus{ border-color: rgba(33, 108, 168, 0.3); }
         &[throw]{
             border-color: rgba(168, 33, 33, 0.3);
-            animation: .32s ease throw;
+            -webkit-animation: .32s ease throw;
+                    animation: .32s ease throw;
         }
     }
 }

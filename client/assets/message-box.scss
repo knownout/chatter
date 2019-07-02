@@ -1,5 +1,6 @@
 #messages-root{
-    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
     margin: 0;
     padding: 10px;
 
@@ -20,22 +21,26 @@
         overflow: hidden;
 
         margin: 0;
-        box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+                box-sizing: border-box;
 
         left: 100%;
-        transform: translateX(-100%);
+        -webkit-transform: translateX(-100%);
+                transform: translateX(-100%);
 
         border-radius: 5px;
         cursor: pointer;
 
         max-width: 100%;
+        width: -webkit-fit-content;
+        width: -moz-fit-content;
         width: fit-content;
 
         text-align: right;
 
         &[warn="true"]{ background: rgb(160, 60, 60); }
         &[ready]:not(:first-child){ margin-top: 10px; }
-        &[ready]{ transition: .12s ease all; visibility: visible; }
+        &[ready]{ -webkit-transition: .12s ease all; transition: .12s ease all; visibility: visible; }
         p{
             position: relative;
             display: block;
